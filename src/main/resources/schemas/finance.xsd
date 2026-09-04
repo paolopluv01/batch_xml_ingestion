@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.greyshield.com/schema/finance"
+           xmlns:fin="http://www.greyshield.com/schema/finance"
+           elementFormDefault="qualified">
+
+    <xs:element name="valuations" type="fin:ValuationsType"/>
+
+    <xs:complexType name="ValuationsType">
+        <xs:sequence>
+            <xs:element name="asset" type="fin:AssetType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AssetType">
+        <xs:sequence>
+            <xs:element name="productionCost" type="fin:MoneyType"/>
+            <xs:element name="retailPrice" type="fin:MoneyType"/>
+            <xs:element name="taxRate" type="xs:decimal"/>
+        </xs:sequence>
+        <xs:attribute name="componentRef" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="MoneyType" mixed="true">
+        <xs:attribute name="currency" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

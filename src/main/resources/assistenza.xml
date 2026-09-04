@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<erp:enterprise xmlns:erp="http://www.greyshield.com/schema/enterprise"
+                xmlns:inv="http://www.greyshield.com/schema/inventory"
+                xmlns:sup="http://www.greyshield.com/schema/supplier"
+                xmlns:wh="http://www.greyshield.com/schema/warehouse"
+                xmlns:fin="http://www.greyshield.com/schema/finance"
+                system="Greyshield_ERP_v3" exportDate="2026-09-01T16:58:31Z">
+
+    <!-- Dominio 1: Fornitori -->
+    <sup:suppliers>
+        <sup:supplier id="BOSCH">
+            <sup:name>Bosch GmbH</sup:name>
+            <sup:rating>A+</sup:rating>
+        </sup:supplier>
+        <sup:supplier id="VAL">
+            <sup:name>Valeo</sup:name>
+            <sup:rating>B</sup:rating>
+        </sup:supplier>
+    </sup:suppliers>
+
+    <!-- Dominio 2: Inventario (Entità Principale) -->
+    <inv:components>
+        <inv:component id="BRK-009" supplierRef="BOSCH">
+            <inv:name>Centralina ABS Modulare</inv:name>
+            <inv:qualityClass>A</inv:qualityClass>
+        </inv:component>
+        <inv:component id="FLT-112" supplierRef="VAL">
+            <inv:name>Filtro Abitacolo a Carboni Attivi</inv:name>
+            <inv:qualityClass>B</inv:qualityClass>
+        </inv:component>
+    </inv:components>
+
+    <!-- Nuovo Dominio 3: Logistica / Magazzino -->
+    <!-- Utilizza 'componentRef' per collegarsi all'inventario tramite chiave esterna -->
+    <wh:stock>
+        <wh:location zone="Nord-A1" componentRef="BRK-009">
+            <wh:quantity>45</wh:quantity>
+            <wh:reorderLevel>10</wh:reorderLevel>
+        </wh:location>
+        <wh:location zone="Sud-C4" componentRef="FLT-112">
+            <wh:quantity>120</wh:quantity>
+            <wh:reorderLevel>50</wh:reorderLevel>
+        </wh:location>
+    </wh:stock>
+
+    <!-- Nuovo Dominio 4: Finanza / Valutazione -->
+    <!-- Utilizza 'componentRef' per collegarsi all'inventario -->
+    <fin:valuations>
+        <fin:asset componentRef="BRK-009">
+            <fin:productionCost currency="EUR">185.50</fin:productionCost>
+            <fin:retailPrice currency="EUR">450.00</fin:retailPrice>
+            <fin:taxRate>0.22</fin:taxRate>
+        </fin:asset>
+        <fin:asset componentRef="FLT-112">
+            <fin:productionCost currency="EUR">4.20</fin:productionCost>
+            <fin:retailPrice currency="EUR">22.00</fin:retailPrice>
+            <fin:taxRate>0.22</fin:taxRate>
+        </fin:asset>
+    </fin:valuations>
+
+</erp:enterprise>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.greyshield.com/schema/warehouse"
+           xmlns:wh="http://www.greyshield.com/schema/warehouse"
+           elementFormDefault="qualified">
+
+    <xs:element name="stock" type="wh:StockType"/>
+
+    <xs:complexType name="StockType">
+        <xs:sequence>
+            <xs:element name="location" type="wh:LocationType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocationType">
+        <xs:sequence>
+            <xs:element name="quantity" type="xs:positiveInteger"/>
+            <xs:element name="reorderLevel" type="xs:nonNegativeInteger"/>
+        </xs:sequence>
+        <xs:attribute name="zone" type="xs:string" use="required"/>
+        <xs:attribute name="componentRef" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.greyshield.com/schema/enterprise"
+           xmlns:erp="http://www.greyshield.com/schema/enterprise"
+           xmlns:sup="http://www.greyshield.com/schema/supplier"
+           xmlns:inv="http://www.greyshield.com/schema/inventory"
+           xmlns:wh="http://www.greyshield.com/schema/warehouse"
+           xmlns:fin="http://www.greyshield.com/schema/finance"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.greyshield.com/schema/supplier" schemaLocation="supplier.xsd"/>
+    <xs:import namespace="http://www.greyshield.com/schema/inventory" schemaLocation="inventory.xsd"/>
+    <xs:import namespace="http://www.greyshield.com/schema/warehouse" schemaLocation="warehouse.xsd"/>
+    <xs:import namespace="http://www.greyshield.com/schema/finance" schemaLocation="finance.xsd"/>
+
+    <xs:element name="enterprise">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="sup:suppliers"/>
+                <xs:element ref="inv:components"/>
+                <xs:element ref="wh:stock"/>
+                <xs:element ref="fin:valuations"/>
+            </xs:sequence>
+            <xs:attribute name="system" type="xs:string" use="required"/>
+            <xs:attribute name="exportDate" type="xs:dateTime" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
