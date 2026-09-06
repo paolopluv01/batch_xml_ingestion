@@ -119,6 +119,8 @@ Le classi JAXB vengono generate automaticamente da Maven nella directory tempora
 target/generated-sources/jaxb/com/greyshield/batch/model/generated/
 ```
 
+La directory `target` non deve essere pushata: viene ricreata da Maven tramite `./mvnw test` o `./mvnw clean package`.
+
 Generazione pulita:
 
 ```bash
