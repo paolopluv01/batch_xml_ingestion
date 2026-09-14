@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  batch-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: batch_xml_ingestion_dev
+    
+    environment:
+      # Spring Boot Configuration
+      - SPRING_APPLICATION_NAME=assistance
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=dev
+      
+      # H2 Database Configuration (In-memory for development)
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      
+      # H2 Console (enabled for debugging)
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      
+      # JVM Settings
+      - JAVA_OPTS=-Xmx512m -Xms256m
+      
+      # Logging - verbose for development
+      - LOGGING_LEVEL_ROOT=DEBUG
+      - LOGGING_LEVEL_COM_GREYSHIELD=DEBUG
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=INFO
+    
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Debug port
+    
+    volumes:
+      # Mount XML input files for easy modification
+      - ./src/main/resources:/app/resources
+      - ./data:/app/data
+      - ./logs:/app/logs
+    
+    # Don't restart on failure in dev (easier debugging)
+    restart: no
+    
+    # More lenient resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "2"
+    
+    labels:
+      version: "0.0.1"
+      description: "Spring Boot Batch XML Ingestion Service (Development)"
+      maintainer: "paolopluv01"
+      environment: "development"
